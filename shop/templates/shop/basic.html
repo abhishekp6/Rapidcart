@@ -20,7 +20,7 @@
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Rapidcart</a>
+            <a class="navbar-brand" href="/shop">Rapidcart</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,30 +28,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
+                  <a class="nav-link" href="/shop/about">About Us</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
+                  <a class="nav-link" href="/shop/contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/shop/tracker">Tracker</a>
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
+              </form> 
+              <button type="button" class="btn btn-secondary mx-3" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                  Cart(<span id="cart">0</span>)
+              </button>
             </div>
           </nav>   
 
@@ -66,7 +61,48 @@
             <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
             <script src="{% static 'js/popper.min.js' %}"></script>
             <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        
+            
+  
+           
+    
+ {% block js %}
+ <script>
+
+console.log('working');
+if(localStorage.getItem('cart') == null)
+{
+  var cart = {};
+}
+else
+{
+  cart = JSON.parse(localStorage.getItem('cart'));
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+}
+$('.cart').click(function(){
+
+console.log('clicked');
+var idstr = this.id.toString();
+console.log(idstr);
+if(cart[idstr] != undefined)
+{
+  cart[idstr] = cart[idstr] + 1;
+}
+else{
+  cart[idstr] = 1;
+}
+console.log(cart);
+localStorage.setItem('cart', JSON.stringify(cart));
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+});
+$('#popcart').popover()
+
+document.getElementById('popcart').setAttribute('data-content','<h5>Cart</h5>');
+
+
+ </script>
+ 
+ {% endblock %}
         
         </body>
         </html>
