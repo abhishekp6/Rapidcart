@@ -1,5 +1,19 @@
 {% extends 'shop/basic.html' %}
+{% load widget_tweaks %}
 
 {% block title %}Contact Us{% endblock %}
 
-{% block body %}This is Contact Page{% endblock %}
+{% block body %}
+
+<h1>Contact Us</h1>
+<br /><br />
+<div class="form-group">
+  <form method="post">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Post</button>
+  </form>
+</div>
+
+{% endblock %}

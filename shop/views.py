@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product
+from .models import Product, Contact
 from math import ceil
+from .forms import NewContactForm
 # Create your views here.
 
 def index(request):
@@ -26,7 +27,15 @@ def about(request):
     return render(request, 'shop/about.html')
 
 def contact(request):
-    return render(request, 'shop/contact.html')
+    if request.method == 'POST':
+        form = NewContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = NewContactForm()
+    else:
+        form = NewContactForm()
+        
+    return render(request, 'shop/contact.html', {'form':form})
 
 
 def tracker(request):
