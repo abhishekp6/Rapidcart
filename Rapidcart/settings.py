@@ -60,7 +60,7 @@ ROOT_URLCONF = 'Rapidcart.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['Rapidcart/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
