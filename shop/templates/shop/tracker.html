@@ -26,11 +26,17 @@
     <div class="col my-4">
         <h2>Your Order Status</h2>
         <div class="my-3">
-            <ul class="list-group">
-
+            <ul class="list-group" id="items">
             </ul>
           </div>
-       
+
+    <div class="col my-4">
+        <h2>Your Order details</h2>
+        <div class="my-3">
+            <ul class="list-group" id="citems">    
+            </ul>
+        </div>
+
     </div>
 </div>
 
@@ -56,7 +62,8 @@ $.ajax({
 
 .done(function(data){
     console.log(data)
-    updates = JSON.parse(data);
+    data = JSON.parse(data);
+    updates = data[0];
     if(updates.length>0 & updates!={})
     {
         for(i=0;i<updates.length;i++){
@@ -78,6 +85,23 @@ $.ajax({
         $('#items').append(mystr);
 
     }
+
+//Fill in the order details
+cart = JSON.parse(data[1]);
+console.log(cart);
+for(item in cart){
+  var name = cart[item][1];
+  var qty = cart[item][0];
+  console.log(name);
+  console.log(qty);
+  mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                ${name}
+                <span class="badge badge-primary badge-pill">${qty}</span>
+                </li>`
+  
+  $('#citems').append(mystr);
+
+}
 });
 event.preventDefault();
 })
